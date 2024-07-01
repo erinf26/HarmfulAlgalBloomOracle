@@ -1,0 +1,17 @@
+const express = require('express');
+const app = express();
+const port = 3000;
+
+app.use(express.static('public'));
+
+app.get('/api/lakes', (req, res) => {
+  const lakes = [
+    { name: 'Lake 1', coordinates: [40.7128, -74.0060] },
+    // this is where to add more lakes
+  ];
+  res.json(lakes);
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});

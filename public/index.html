@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NYC Interactive Map</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="title-container">
+    <img src="nasa-webapp-banner.png" alt="NASA Webapp Banner" class="banner">
+  </div>
+  <div id="container">
+    <div id="sidebar">
+      <input type="text" id="search-bar" placeholder="Search for a lake...">
+      <div id="logos">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL3y9HMdddArZOshBzTKmM4pln2fHcn6_2JQ&s" alt="Logo 1" class="logo">
+        <a href="https://www.giss.nasa.gov/edu/ccri/" target="_blank">
+          <img src="https://images.squarespace-cdn.com/content/v1/5d9624740c5b607d9c914161/1600185674967-EN1SCA2582BP5X89JSUB/CCRI_Logo.jpg" alt="CCRI Logo" class="logo">
+        </a>
+      </div>
+      <div id="legend">
+        <div class="legend-item">
+          <img src="time-series.png" alt="Time Series" class="legend-icon">
+          <p>Link to time-series of chlorophyll-a concentrations at this location.</p>
+        </div>
+        <div class="legend-item">
+          <img src="algae.png" alt="Algae" class="legend-icon">
+          <p>Link to Machine Learning Generated prediction of chlorophyll-a concentrations in this area of the lake.</p>
+        </div>
+      </div>
+    </div>
+    <div id="map-container">
+      <div id="map"></div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
