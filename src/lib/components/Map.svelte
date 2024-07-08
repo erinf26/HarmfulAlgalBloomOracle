@@ -28,7 +28,7 @@
 			for (const lake of lakes) {
 				let marker = leaflet
 					.circleMarker(
-						// circle marker for better performance
+						// circle marker for better performance (cred: https://stackoverflow.com/a/43019740)
 						{ lat: lake.latitude, lng: lake.longitude },
 						{
 							radius: 5,
