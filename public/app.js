@@ -74,4 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
   `;
 
   customMarker.bindPopup(popupContent);
+
+  const imageUrl = '/path/to/your/tif/file.tif';
+  const imageBounds = [[42.5, -77.0], [42.9, -76.8]]; 
+
+  L.imageOverlay(imageUrl, imageBounds).addTo(map);
 });
