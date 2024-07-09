@@ -3,7 +3,7 @@ import { LakeSchema, type LakeExported } from "$lib/types";
 import type { PageServerLoad } from './$types';
 import fs from "fs/promises";
 
-const KEEP_TO_RENAME: Record<string, string> = { 'site': 'name', 'MEAN_lat': 'latitude', 'MEAN_long': 'longitude' }
+const KEEP_TO_RENAME: Record<string, string> = { 'site': 'name', 'MEAN_lat': 'latitude', 'MEAN_long': 'longitude', 'lagoslakei': "id" }
 const COLS_TO_KEEP = Object.keys(KEEP_TO_RENAME);
 
 export const load: PageServerLoad = async ({ params }) => {
