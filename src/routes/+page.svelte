@@ -7,8 +7,9 @@
 
 	onMount(async () => {
 		console.log('Number of lakes: ', data.lakes.length);
+		console.log(data.lakes.filter((v) => v.name.toLowerCase().includes('chautauqua')));
 	});
 </script>
 
 <h1>Welcome to HAB Oracle</h1>
-<Map lakes={data.lakes}/>
+<Map lakes={data.lakes} />

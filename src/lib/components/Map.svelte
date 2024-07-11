@@ -16,7 +16,8 @@
 
 			map = leaflet
 				.map(mapElement, { preferCanvas: true }) // use canvas for better performance
-				.setView([lakes[7].latitude, lakes[7].longitude], 7); // this sets the view
+				.setView([42.18778778, -79.42924043], 11); //// this sets the view for lake chautauqua
+			// .setView([lakes[7].latitude, lakes[7].longitude], 7); // this sets the view for new york state
 
 			leaflet
 				.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -40,6 +41,24 @@
 						console.log('Marker clicked: ', lake);
 					});
 			}
+
+			let imageUrl = '/S2_Chautauqua_v2_predictions.png';
+			let errorOverlayUrl = 'https://cdn-icons-png.flaticon.com/512/110/110686.png';
+			let altText =
+				'Image of Newark, N.J. in 1922. Source: The University of Texas at Austin, UT Libraries Map Collection.';
+			let latLngBounds = leaflet.latLngBounds([
+				[42.10153949052764, -79.49915589630453],
+				[42.25684191460839, -79.26562361083948]
+			]);
+
+			let imageOverlay = leaflet
+				.imageOverlay(imageUrl, latLngBounds, {
+					opacity: 0.8,
+					errorOverlayUrl: errorOverlayUrl,
+					alt: altText,
+					interactive: true
+				})
+				.addTo(map);
 		}
 	});
 </script>
@@ -48,6 +67,6 @@
 
 <style>
 	.map {
-		height: 600px;
+		height: 85vh;
 	}
 </style>
