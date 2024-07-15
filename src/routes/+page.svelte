@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import Map from '$lib/components/Map.svelte';
-
+	import Box from '$lib/components/Box.svelte';
 	export let data: PageData;
 
 	onMount(async () => {
@@ -11,5 +11,21 @@
 	});
 </script>
 
-<h1>Welcome to HAB Oracle</h1>
-<Map lakes={data.lakes} />
+<h1 id="title">Climate Variable Visualizer</h1>
+
+<div class="box-container">
+	<Box logo="/urban.png" title="Urban Heat Tool"link="/urban-heat-tool"/>
+	<Box logo="/algae.png" title="Algal Blooms"link="/algal-blooms"/>
+	<Box logo="/variable.png" title="TBD Other Variable"link="/variable"/>
+</div>
+
+<style>
+	.box-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100vh;
+	}
+</style>	
+
+

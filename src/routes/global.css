@@ -17,3 +17,16 @@ img {
     max-width: 100%;
     display: block;
 }
+
+body {
+    background-color: #428433;
+    font-family: 'League Spartan', sans-serif;
+}
+
+#title {
+    color: #FFF42C;
+    font-size: 2rem;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}

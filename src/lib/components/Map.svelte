@@ -10,6 +10,12 @@
 	let mapElement: HTMLElement;
 	let map: Map;
 
+	export function setMapView(latitude: number, longitude: number, zoom: number = 13) {
+		if (map) {
+			map.setView([latitude, longitude], zoom);
+		}
+	}
+
 	onMount(async () => {
 		if (browser) {
 			const leaflet = await import('leaflet');
@@ -64,9 +70,28 @@
 </script>
 
 <div class="map" bind:this={mapElement} />
+<div id="search-results" class="search-results"></div>
 
 <style>
 	.map {
 		height: 85vh;
+	}
+	.search-results {
+		position: absolute;
+		top: 70px;
+		right: 10px;
+		background: white;
+		border: 1px solid #ccc;
+		max-height: 300px;
+		overflow-y: auto;
+	}
+
+	.search-result-item {
+		padding: 0.5rem;
+		cursor: pointer;
+	}
+
+	.search-result-item:hover {
+		background: #f0f0f0;
 	}
 </style>
