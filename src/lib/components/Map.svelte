@@ -30,7 +30,7 @@
 
 			map = leaflet
 				.map(mapElement, { preferCanvas: true }) // use canvas for better performance
-				.setView([41.13612064886357, -73.9352407747292], 11); // this sets the view for lake chautauqua
+				.setView([41.13612064886357, -73.9352407747292], 13); // this sets the view for lake congers
 			// .setView([lakes[7].latitude, lakes[7].longitude], 7); // this sets the view for new york state
 
 			leaflet
