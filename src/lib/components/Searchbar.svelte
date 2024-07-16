@@ -24,7 +24,7 @@
 		type="text"
 		name="search_query"
 		bind:value={query}
-		placeholder="Search lakes..."
+		placeholder={`Search ${lakes.length} lakes...`}
 		id="search-bar"
 	/>
 </form>
@@ -46,7 +46,7 @@
 
 <style>
 	.search-bar {
-		margin: 1rem;
+		margin-block: 1rem;
 	}
 
 	input {
