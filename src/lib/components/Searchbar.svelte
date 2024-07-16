@@ -1,28 +1,32 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+	import type { LakeExported } from '$lib/types';
 
-  const dispatch = createEventDispatcher();
-  let query = '';
-
-  function handleInput(event: Event) {
-    const target = event.target as HTMLInputElement;
-    query = target.value;
-    dispatch('search', { query });
-  }
+	export let lakes: LakeExported[];
+	let query: string;
+	function handleSubmit(event: Event) {
+		const filteredLakes = lakes.filter((v) => v.name.toLowerCase().includes(query));
+		console.log('sliced: ', filteredLakes.slice(0, 5));
+	}
 </script>
 
-<div class="search-bar">
-  <input type="text" bind:value={query} on:input={handleInput} placeholder="Search lakes..." id="search-bar" />
-</div>
+<form on:submit|preventDefault={handleSubmit} class="search-bar">
+	<input
+		type="text"
+		name="search_query"
+		bind:value={query}
+		placeholder="Search lakes..."
+		id="search-bar"
+	/>
+</form>
 
 <style>
-  .search-bar {
-    margin: 1rem;
-  }
+	.search-bar {
+		margin: 1rem;
+	}
 
-  input {
-    padding: 0.5rem;
-    font-size: 1rem;
-    width: 100%;
-  }
+	input {
+		padding: 0.5rem;
+		font-size: 1rem;
+		width: 100%;
+	}
 </style>
