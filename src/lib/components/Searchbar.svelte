@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { mapCoords } from '$lib/store';
 	import type { LakeExported } from '$lib/types';
 
 	export let lakes: LakeExported[];
@@ -6,11 +7,15 @@
 	let lakesResults: LakeExported[] = [];
 
 	function handleChange() {
+		if (!query) {
+			lakesResults = [];
+			return;
+		}
 		lakesResults = lakes.filter((v) => v.name.toLowerCase().includes(query));
 	}
 
 	function setView(lat: number, long: number) {
-		console.log({ lat, long });
+		$mapCoords = [lat, long];
 	}
 </script>
 
@@ -54,6 +59,7 @@
 		border: 1px solid black;
 		margin-block: 0.5rem;
 		border-radius: 15px;
+		cursor: pointer;
 	}
 
 	#results {

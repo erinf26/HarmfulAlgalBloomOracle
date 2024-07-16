@@ -4,6 +4,7 @@
 	import Map from '$lib/components/Map.svelte';
 	import Searchbar from '$lib/components/Searchbar.svelte';
 	import Box from '$lib/components/Box.svelte';
+	import type { LatLngTuple } from 'leaflet';
 
 	export let data: PageData;
 
@@ -11,10 +12,6 @@
 		console.log('Number of lakes: ', data.lakes.length);
 		console.log(data.lakes.filter((v) => v.name.toLowerCase().includes('chautauqua')));
 	});
-
-	function setMapView(latitude: number, longitude: number, arg2: number) {
-		throw new Error('Function not implemented.');
-	}
 </script>
 
 <h1>Algal Blooms Map</h1>

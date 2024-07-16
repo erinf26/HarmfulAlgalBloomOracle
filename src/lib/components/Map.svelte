@@ -1,14 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { LatLngBounds, Map } from 'leaflet';
+	import type { LatLngBounds, LatLngTuple, Map } from 'leaflet';
 	import { browser } from '$app/environment';
 	import type { LakeExported } from '$lib/types';
 	import 'leaflet/dist/leaflet.css';
+	import { mapCoords } from '$lib/store';
 
 	export let lakes: LakeExported[];
 
 	let mapElement: HTMLElement;
 	let map: Map;
+
+	const defaultViewCoords: LatLngTuple = [41.13612064886357, -73.9352407747292];
 
 	onMount(async () => {
 		if (browser) {
@@ -28,9 +31,8 @@
 					.addTo(map);
 			};
 
-			map = leaflet
-				.map(mapElement, { preferCanvas: true }) // use canvas for better performance
-				.setView([41.13612064886357, -73.9352407747292], 13); // this sets the view for lake congers
+			map = leaflet.map(mapElement, { preferCanvas: true }); // use canvas for better performance
+			// .setView($mapCoords || defaultViewCoords, 13); // this sets the view for lake congers
 			// .setView([lakes[7].latitude, lakes[7].longitude], 7); // this sets the view for new york state
 
 			leaflet
@@ -73,6 +75,10 @@
 				]),
 				'Lake Chautauqua'
 			);
+
+			mapCoords.subscribe((updatedCoords) => {
+				map.setView(updatedCoords || defaultViewCoords, 12);
+			});
 		}
 	});
 </script>
