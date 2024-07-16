@@ -31,11 +31,16 @@
 
 {#if lakesResults.length > 0}
 	<div id="results">
-		{#each lakesResults as lakeResult}
+		{#each lakesResults.slice(0, 5) as lakeResult}
 			<button class="result" on:click={() => setView(lakeResult.latitude, lakeResult.longitude)}>
 				{lakeResult.name}
 			</button>
 		{/each}
+		{#if lakesResults.length > 5}
+			<p class="warning">
+				There are {lakesResults.length - 5} more elements. Specify a more descriptive search.
+			</p>
+		{/if}
 	</div>
 {/if}
 
@@ -64,5 +69,9 @@
 
 	#results {
 		margin-bottom: 1rem;
+	}
+
+	.warning {
+		text-align: center;
 	}
 </style>

@@ -3,8 +3,6 @@
 	import type { PageData } from './$types';
 	import Map from '$lib/components/Map.svelte';
 	import Searchbar from '$lib/components/Searchbar.svelte';
-	import Box from '$lib/components/Box.svelte';
-	import type { LatLngTuple } from 'leaflet';
 
 	export let data: PageData;
 
