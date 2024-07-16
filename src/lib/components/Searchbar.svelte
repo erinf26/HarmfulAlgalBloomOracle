@@ -3,13 +3,18 @@
 
 	export let lakes: LakeExported[];
 	let query: string;
-	function handleSubmit(event: Event) {
-		const filteredLakes = lakes.filter((v) => v.name.toLowerCase().includes(query));
-		console.log('sliced: ', filteredLakes.slice(0, 5));
+	let lakesResults: LakeExported[] = [];
+
+	function handleChange() {
+		lakesResults = lakes.filter((v) => v.name.toLowerCase().includes(query));
+	}
+
+	function setView(lat: number, long: number) {
+		console.log({ lat, long });
 	}
 </script>
 
-<form on:submit|preventDefault={handleSubmit} class="search-bar">
+<form on:submit|preventDefault={handleChange} class="search-bar">
 	<input
 		type="text"
 		name="search_query"
@@ -18,6 +23,16 @@
 		id="search-bar"
 	/>
 </form>
+
+{#if lakesResults.length > 0}
+	<div id="results">
+		{#each lakesResults as lakeResult}
+			<button class="result" on:click={() => setView(lakeResult.latitude, lakeResult.longitude)}>
+				{lakeResult.name}
+			</button>
+		{/each}
+	</div>
+{/if}
 
 <style>
 	.search-bar {
@@ -28,5 +43,20 @@
 		padding: 0.5rem;
 		font-size: 1rem;
 		width: 100%;
+	}
+
+	.result {
+		display: block;
+		width: 50%;
+		margin-inline: auto;
+		padding-block: 1rem;
+		background-color: white;
+		border: 1px solid black;
+		margin-block: 0.5rem;
+		border-radius: 15px;
+	}
+
+	#results {
+		margin-bottom: 1rem;
 	}
 </style>
