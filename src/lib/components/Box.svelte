@@ -3,17 +3,16 @@
 	export let logo: string;
 	export let title: string;
 	export let link: string;
-
-	function openLink() {
-		window.open(link, '_blank');
-	}
 </script>
 
-<div class="box">
-	<img src={logo} alt={title} />
-	<div class="box-title">{title}</div>
-	<img class="plus-sign" src="/pink-plus.png" alt="plus sign" on:click={openLink} />
-</div>
+<a href={link}>
+	<div class="box">
+		<img src={logo} alt={title} />
+		<div class="box-title">{title}</div>
+
+		<img class="plus-sign" src="/pink-plus.png" alt="plus sign" />
+	</div>
+</a>
 
 <style>
 	.box {
@@ -27,6 +26,7 @@
 		width: 200px;
 		margin: 1rem;
 		position: relative;
+		text-decoration: none;
 	}
 
 	.box img {
@@ -38,12 +38,13 @@
 		margin-top: 1rem;
 		font-size: 1.2rem;
 		text-align: center;
+		color: black;
 	}
 
 	.plus-sign {
-        top: 0px;
-        right: 0px;
-        position: absolute;
+		top: 0px;
+		right: 0px;
+		position: absolute;
 		cursor: pointer;
 	}
 </style>

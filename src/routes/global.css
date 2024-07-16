@@ -4,13 +4,21 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 16px;
+}
+
 body {
-    font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
     font-weight: normal;
+    background-color: #428433;
+
+    color: white;
 }
 
 a {
     color: inherit;
+    text-decoration: none;
 }
 
 img {
@@ -18,15 +26,3 @@ img {
     display: block;
 }
 
-body {
-    background-color: #428433;
-    font-family: 'League Spartan', sans-serif;
-}
-
-#title {
-    color: #FFF42C;
-    font-size: 2rem;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}

@@ -4,11 +4,12 @@
 </script>
 
 <svelte:head>
-	<title>Climate Variable Visualizer</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+	<title>CCRI Visualizer</title>
 </svelte:head>
+
+<div id="navbar_container">
+	<Navbar />
+</div>
 
 <main id="main">
 	<slot />

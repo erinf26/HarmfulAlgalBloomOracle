@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
-	import Map from '$lib/components/Map.svelte';
 	import Box from '$lib/components/Box.svelte';
 	export let data: PageData;
 
@@ -11,12 +10,10 @@
 	});
 </script>
 
-<h1 id="title">Climate Variable Visualizer</h1>
-
 <div class="box-container">
-	<Box logo="/urban.png" title="Urban Heat Tool"link="/urban-heat-tool"/>
-	<Box logo="/algae.png" title="Algal Blooms"link="/algal-blooms"/>
-	<Box logo="/variable.png" title="TBD Other Variable"link="/variable"/>
+	<Box logo="/urban.png" title="Urban Heat Tool" link="/urban-heat-tool" />
+	<Box logo="/algae.png" title="Algal Blooms" link="/algal-blooms" />
+	<Box logo="/variable.png" title="TBD Other Variable" link="/variable" />
 </div>
 
 <style>
@@ -26,6 +23,4 @@
 		align-items: center;
 		height: 100vh;
 	}
-</style>	
-
-
+</style>
