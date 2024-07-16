@@ -15,6 +15,8 @@
 	}
 
 	function setView(lat: number, long: number) {
+		query = '';
+		lakesResults = [];
 		$mapCoords = [lat, long];
 	}
 </script>

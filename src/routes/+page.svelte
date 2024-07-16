@@ -13,7 +13,7 @@
 <div class="box-container">
 	<Box logo="/urban.png" title="Urban Heat Tool" link="/urban-heat-tool" />
 	<Box logo="/algae.png" title="Algal Blooms" link="/algal-blooms" />
-	<Box logo="/variable.png" title="TBD Other Variable" link="/variable" />
+	<Box logo="/variable.png" title="TBD Variable" link="/variable" />
 </div>
 
 <style>
