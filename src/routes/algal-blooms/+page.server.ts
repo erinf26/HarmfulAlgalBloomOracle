@@ -25,7 +25,10 @@ export const load: PageServerLoad = async ({ params }) => {
             }
         }
         const lake_to_push_verified = LakeSchema.parse(lake_to_push);
-        lakes_as_dicts.push(lake_to_push_verified as LakeExported);
+        if (lakes_as_dicts.filter(v => v.name.toLowerCase() == lake_to_push_verified.name.toLowerCase()).length == 0) {
+            // removing duplicates, only push if this lake doesn't exist
+            lakes_as_dicts.push(lake_to_push_verified as LakeExported);
+        }
     }
 
     return {
