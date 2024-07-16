@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { Map } from 'leaflet';
+	import type { LatLngBounds, Map } from 'leaflet';
 	import { browser } from '$app/environment';
 	import type { LakeExported } from '$lib/types';
 	import 'leaflet/dist/leaflet.css';
@@ -10,19 +10,27 @@
 	let mapElement: HTMLElement;
 	let map: Map;
 
-	export function setMapView(latitude: number, longitude: number, zoom: number = 13) {
-		if (map) {
-			map.setView([latitude, longitude], zoom);
-		}
-	}
-
 	onMount(async () => {
 		if (browser) {
 			const leaflet = await import('leaflet');
 
+			const add_lake_overlay_to_map = function (
+				imageUrl: string,
+				latLngBounds: LatLngBounds,
+				altText: string
+			) {
+				let imageOverlay = leaflet
+					.imageOverlay(imageUrl, latLngBounds, {
+						opacity: 0.8,
+						alt: altText,
+						interactive: true
+					})
+					.addTo(map);
+			};
+
 			map = leaflet
 				.map(mapElement, { preferCanvas: true }) // use canvas for better performance
-				.setView([42.18778778, -79.42924043], 11); //// this sets the view for lake chautauqua
+				.setView([41.13612064886357, -73.9352407747292], 13); // this sets the view for lake congers
 			// .setView([lakes[7].latitude, lakes[7].longitude], 7); // this sets the view for new york state
 
 			leaflet
@@ -48,50 +56,31 @@
 					});
 			}
 
-			let imageUrl = '/S2_Chautauqua_v2_predictions.png';
-			let errorOverlayUrl = 'https://cdn-icons-png.flaticon.com/512/110/110686.png';
-			let altText =
-				'Image of Newark, N.J. in 1922. Source: The University of Texas at Austin, UT Libraries Map Collection.';
-			let latLngBounds = leaflet.latLngBounds([
-				[42.10153949052764, -79.49915589630453],
-				[42.25684191460839, -79.26562361083948]
-			]);
+			add_lake_overlay_to_map(
+				'/Congers_T2_predictions.png',
+				leaflet.latLngBounds([
+					[41.14790209037696, -73.94413139827235],
+					[41.13612064886357, -73.9352407747292]
+				]),
+				'Lake Congers'
+			);
 
-			let imageOverlay = leaflet
-				.imageOverlay(imageUrl, latLngBounds, {
-					opacity: 0.8,
-					errorOverlayUrl: errorOverlayUrl,
-					alt: altText,
-					interactive: true
-				})
-				.addTo(map);
+			add_lake_overlay_to_map(
+				'/S2_Chautauqua_v2_predictions.png',
+				leaflet.latLngBounds([
+					[42.26008723694799, -79.49540093993534], // Lake Chautauqua corner bounds
+					[42.0983120459646, -79.26995135973668]
+				]),
+				'Lake Chautauqua'
+			);
 		}
 	});
 </script>
 
 <div class="map" bind:this={mapElement} />
-<div id="search-results" class="search-results"></div>
 
 <style>
 	.map {
 		height: 85vh;
-	}
-	.search-results {
-		position: absolute;
-		top: 70px;
-		right: 10px;
-		background: white;
-		border: 1px solid #ccc;
-		max-height: 300px;
-		overflow-y: auto;
-	}
-
-	.search-result-item {
-		padding: 0.5rem;
-		cursor: pointer;
-	}
-
-	.search-result-item:hover {
-		background: #f0f0f0;
 	}
 </style>

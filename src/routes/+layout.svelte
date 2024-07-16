@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Navbar from '$lib/components/Navbar.svelte';
 	import './global.css';
 </script>
 
@@ -14,10 +15,9 @@
 </main>
 
 <style>
-	main {
+	main,
+	#navbar_container {
 		width: 98vw;
 		margin-inline: auto;
 	}
 </style>
-
-
