@@ -7,7 +7,6 @@ const KEEP_TO_RENAME: Record<string, string> = { 'site': 'name', 'MEAN_lat': 'la
 const COLS_TO_KEEP = Object.keys(KEEP_TO_RENAME);
 
 export const load: PageServerLoad = async ({ params }) => {
-    console.log("PATH_TO_LAKES_CSV: ", PATH_TO_LAKES_CSV);
     const lakes_csv = String(await fs.readFile(PATH_TO_LAKES_CSV));
     const lines = lakes_csv.trim().split("\n");
 
