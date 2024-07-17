@@ -18,7 +18,7 @@
 <style>
 	main,
 	#navbar_container {
-		width: 98vw;
+		width: 95vw;
 		margin-inline: auto;
 	}
 </style>
