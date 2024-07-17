@@ -19,9 +19,12 @@
 <style>
 	.box-container {
 		display: flex;
-		justify-content: center;
+		justify-content: space-around;
 		align-items: center;
-		height: 80vh;
+		height: calc(calc(100dvh - 60px - 60px)); /* to center the box on the entire page */
+		max-width: 900px;
+		margin-bottom: 60px;
+		margin-inline: auto;
 		flex-wrap: wrap;
 	}
 </style>

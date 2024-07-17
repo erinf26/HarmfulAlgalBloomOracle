@@ -11,13 +11,8 @@
 	}
 
 	nav {
-		margin-top: 1rem;
-		margin-bottom: 1rem;
-	}
-
-	@media screen and (max-width: 840px) {
-		nav {
-			margin-block: 0.5rem;
-		}
+		height: 100%;
+		display: flex;
+		align-items: center;
 	}
 </style>
