@@ -109,6 +109,15 @@
 				'Lake Chautauqua'
 			);
 
+			add_lake_overlay_to_map(
+				'/ProspectPark.png',
+				leaflet.latLngBounds([
+					[40.66159279351088, -73.97173695219149],
+					[40.65287811817147, -73.96430067526515]
+				]),
+				'Prospect Park'
+			);
+
 			mapCoords.subscribe((updatedCoords) => {
 				map.setView(updatedCoords || defaultViewCoords, 12);
 			});
