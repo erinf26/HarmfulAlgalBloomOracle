@@ -55,7 +55,9 @@
 				});
 			}
 
-			map = leaflet.map(mapElement, { preferCanvas: true }); // use canvas for better performance
+			map = leaflet.map(mapElement, { attributionControl: false, preferCanvas: true }); // use canvas for better performance
+			let myAttrControl = leaflet.control.attribution().addTo(map);
+			myAttrControl.setPrefix('<a href="https://leafletjs.com/">Leaflet</a>');
 			// .setView([lakes[7].latitude, lakes[7].longitude], 7); // this sets the view for new york state
 
 			leaflet
