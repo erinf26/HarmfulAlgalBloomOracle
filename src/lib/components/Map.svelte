@@ -141,6 +141,7 @@
 
 <style>
 	.map {
-		height: 85vh;
+		height: 80vh;
+		margin-bottom: 1rem;
 	}
 </style>
