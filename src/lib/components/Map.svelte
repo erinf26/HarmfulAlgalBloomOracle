@@ -85,7 +85,11 @@
 				bindPopup(marker, (container) => {
 					let c = new MapPopup({
 						target: container,
-						props: {} // i don't know if these props will update dynamically, warning for the future
+						props: {
+							lakename: lake.name,
+							lakeid: lake.id,
+							insitudate: lake.date
+						} // i don't know if these props will update dynamically, warning for the future
 					});
 					return c;
 				});
