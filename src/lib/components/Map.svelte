@@ -117,6 +117,14 @@
 				]),
 				'Prospect Park'
 			);
+			add_lake_overlay_to_map(
+				'/Saratoga.png',
+				leaflet.latLngBounds([
+					[43.04679028743946, -73.76569912915973],
+					[42.98589557550428, -73.7146666011909]
+				]),
+				'Saratoga'
+			);
 
 			mapCoords.subscribe((updatedCoords) => {
 				map.setView(updatedCoords || defaultViewCoords, 12);
