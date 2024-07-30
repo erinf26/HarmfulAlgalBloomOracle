@@ -1,14 +1,14 @@
 <script lang="ts">
 	export let lakeid: number;
 	export let lakename: string;
-	export let insitudate: Date;
+	export let insitudate: string;
 
 	// Date.toLocaleDateString('en-CA') outputs date in YYYY-MM-DD without swithcing timezone, exactly what is needed here
 </script>
 
 <div class="lakepopup" id={'lake' + String(lakeid)}>
 	<p class="lakename">{lakename}</p>
-	<p>In situ data recorded on {insitudate.toLocaleDateString('en-CA')}</p>
+	<p>In situ data recorded on {new Date(insitudate).toLocaleDateString('en-CA')}</p>
 	<button>Download Time Series</button>
 	<button>Download Prediction GeoTiff</button>
 	<button>Change Date</button>

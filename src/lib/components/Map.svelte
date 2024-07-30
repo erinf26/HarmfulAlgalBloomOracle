@@ -89,7 +89,7 @@
 						target: container,
 						props: {
 							lakename: lake.name,
-							lakeid: lake.id,
+							lakeid: lake.lagoslakeid,
 							insitudate: lake.date
 						} // i don't know if these props will update dynamically, warning for the future
 					});
