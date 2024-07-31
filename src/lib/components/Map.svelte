@@ -97,57 +97,19 @@
 					return c;
 				});
 
-				// loads every spatial prediction for every lake
-				// will need to refactor to only use one for a specific date
 				if (lake.expand && lake.expand.spatialPredictions.length > 0) {
-					for (const spatialPrediction of lake.expand.spatialPredictions) {
-						const image_url = `${PUBLIC_POCKETBASE_URL}/api/files/${spatialPrediction.collectionId}/${spatialPrediction.id}/${spatialPrediction.display_image}`;
-						add_lake_overlay_to_map(
-							image_url,
-							leaflet.latLngBounds([
-								[spatialPrediction.corner1latitude, spatialPrediction.corner1longitude],
-								[spatialPrediction.corner2latitude, spatialPrediction.corner2longitude]
-							]),
-							lake.name
-						);
-					}
+					const spatialPrediction = lake.expand.spatialPredictions[0]; // only use one for a specific date to not have to loop
+					const image_url = `${PUBLIC_POCKETBASE_URL}/api/files/${spatialPrediction.collectionId}/${spatialPrediction.id}/${spatialPrediction.display_image}`;
+					add_lake_overlay_to_map(
+						image_url,
+						leaflet.latLngBounds([
+							[spatialPrediction.corner1latitude, spatialPrediction.corner1longitude],
+							[spatialPrediction.corner2latitude, spatialPrediction.corner2longitude]
+						]),
+						lake.name
+					);
 				}
 			}
-
-			// add_lake_overlay_to_map(
-			// 	'/Congers_T2_predictions.png',
-			// 	leaflet.latLngBounds([
-			// 		[41.14790209037696, -73.94413139827235],
-			// 		[41.13612064886357, -73.9352407747292]
-			// 	]),
-			// 	'Lake Congers'
-			// );
-
-			// add_lake_overlay_to_map(
-			// 	'/S2_Chautauqua_v2_predictions.png',
-			// 	leaflet.latLngBounds([
-			// 		[42.26008723694799, -79.49540093993534], // Lake Chautauqua corner bounds
-			// 		[42.0983120459646, -79.26995135973668]
-			// 	]),
-			// 	'Lake Chautauqua'
-			// );
-
-			// add_lake_overlay_to_map(
-			// 	'/ProspectPark.png',
-			// 	leaflet.latLngBounds([
-			// 		[40.66159279351088, -73.97173695219149],
-			// 		[40.65287811817147, -73.96430067526515]
-			// 	]),
-			// 	'Prospect Park'
-			// );
-			// add_lake_overlay_to_map(
-			// 	'/Saratoga.png',
-			// 	leaflet.latLngBounds([
-			// 		[43.04679028743946, -73.76569912915973],
-			// 		[42.98589557550428, -73.7146666011909]
-			// 	]),
-			// 	'Saratoga'
-			// );
 
 			mapCoords.subscribe((updatedCoords) => {
 				map.setView(updatedCoords || defaultViewCoords, 12);
