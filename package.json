@@ -34,7 +34,6 @@
 	"type": "module",
 	"dependencies": {
 		"leaflet": "^1.9.4",
-		"pocketbase": "^0.21.4",
-		"zod": "^3.23.8"
+		"pocketbase": "^0.21.4"
 	}
 }

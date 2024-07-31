@@ -14,6 +14,6 @@ export async function addLakes(lakes: LakeExported[]) {
     }
 }
 export async function getLakes() {
-    const lakes = await pb.collection('lakes').getFullList<LakeExported>();
+    const lakes = await pb.collection('lakes').getFullList<LakeExported>({ expand: "spatialPredictions" });
     return lakes;
 }

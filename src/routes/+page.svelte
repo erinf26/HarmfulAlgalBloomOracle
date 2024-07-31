@@ -3,11 +3,6 @@
 	import type { PageData } from './$types';
 	import Box from '$lib/components/Box.svelte';
 	export let data: PageData;
-
-	onMount(async () => {
-		console.log('Number of lakes: ', data.lakes.length);
-		console.log(data.lakes.filter((v) => v.name.toLowerCase().includes('chautauqua')));
-	});
 </script>
 
 <div class="box-container">

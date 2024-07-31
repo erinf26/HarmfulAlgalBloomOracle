@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 type StrictRecordModel = {
     id: string;
     created: string;
@@ -8,12 +6,28 @@ type StrictRecordModel = {
     collectionName: string;
 }; // Same as pocketbase's record model, without the [key: string] : any
 
-export const LakeSchema = z.object({
-    name: z.string(),
-    latitude: z.coerce.number(),
-    longitude: z.coerce.number(),
-    lagoslakeid: z.coerce.number(),
-    date: z.string() // pocketbase returns dates as strings
-});
+export type Lake = {
+    name: string;
+    latitude: number,
+    longitude: number,
+    lagoslakeid: number,
+    expand?: {
+        spatialPredictions: SpatialPredictionExported[]
+    },
+    // date: z.string() // pocketbase returns dates as strings
+};
 
-export type LakeExported = z.infer<typeof LakeSchema> & StrictRecordModel;
+export type LakeExported = Lake & StrictRecordModel;
+
+type SpatialPrediction = {
+    raster_image: string;
+    display_image: string;
+    date: string;
+    scale: number;
+    corner1latitude: number;
+    corner1longitude: number;
+    corner2latitude: number;
+    corner2longitude: number;
+}
+
+export type SpatialPredictionExported = SpatialPrediction & StrictRecordModel;
