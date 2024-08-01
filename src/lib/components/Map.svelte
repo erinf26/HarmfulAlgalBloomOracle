@@ -15,6 +15,10 @@
 
 	const defaultViewCoords: LatLngTuple = [42.18778778, -79.42924043]; // LAKE CHAUTAUQUA coords
 
+	let default_index = 0;
+	let current_focused_lake_id: number | null = null; // unknown
+	let current_date: Date | null = null; // unknown
+
 	onMount(async () => {
 		if (browser) {
 			const leaflet = await import('leaflet');
@@ -31,6 +35,9 @@
 						interactive: true
 					})
 					.addTo(map);
+				imageOverlay.on('click', () => {
+					console.log('Map layer clicked!');
+				});
 			};
 
 			// Create a popup with a Svelte component inside it and handle removal when the popup is torn down.
@@ -56,7 +63,7 @@
 				});
 			}
 
-			map = leaflet.map(mapElement, { attributionControl: false, preferCanvas: true }); // use canvas for better performance
+			map = leaflet.map(mapElement, { attributionControl: false }); // use canvas for better performance
 			let myAttrControl = leaflet.control.attribution().addTo(map);
 			myAttrControl.setPrefix('<a href="https://leafletjs.com/">Leaflet</a>');
 			// .setView([lakes[7].latitude, lakes[7].longitude], 7); // this sets the view for new york state
@@ -98,7 +105,7 @@
 				});
 
 				if (lake.expand && lake.expand.spatialPredictions.length > 0) {
-					const spatialPrediction = lake.expand.spatialPredictions[0]; // only use one for a specific date to not have to loop
+					const spatialPrediction = lake.expand.spatialPredictions[default_index]; // only use one for a specific date to not have to loop
 					const image_url = `${PUBLIC_POCKETBASE_URL}/api/files/${spatialPrediction.collectionId}/${spatialPrediction.id}/${spatialPrediction.display_image}`;
 					add_lake_overlay_to_map(
 						image_url,
