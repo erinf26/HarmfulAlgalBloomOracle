@@ -1,14 +1,15 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { CircleMarker, LatLngBounds, LatLngTuple, Map, Marker } from 'leaflet';
+	import type { CircleMarker, ImageOverlay, LatLngBounds, LatLngTuple, Map, Marker } from 'leaflet';
 	import { browser } from '$app/environment';
 	import type { Lake, LakeExported } from '$lib/types';
 	import 'leaflet/dist/leaflet.css';
-	import { mapCoords } from '$lib/store';
+	import { mapCoords, selectedDateIndex } from '$lib/store';
 	import MapPopup from './MapPopup.svelte';
 	import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
 
 	export let lakes: LakeExported[];
+	export let simpleRasterDates: string[];
 
 	let mapElement: HTMLElement;
 	let map: Map;
@@ -18,6 +19,7 @@
 	let default_index = 0;
 	let current_focused_lake_id: number | null = null; // unknown
 	let current_date: Date | null = null; // unknown
+	let visible_image_overlays: ImageOverlay[] = [];
 
 	onMount(async () => {
 		if (browser) {
@@ -38,6 +40,14 @@
 				imageOverlay.on('click', () => {
 					console.log('Map layer clicked!');
 				});
+				visible_image_overlays.push(imageOverlay);
+			};
+
+			const clearImageOverlays = () => {
+				for (let imageOverlay of visible_image_overlays) {
+					map.removeLayer(imageOverlay);
+				}
+				visible_image_overlays = [];
 			};
 
 			// Create a popup with a Svelte component inside it and handle removal when the popup is torn down.
@@ -103,23 +113,36 @@
 					});
 					return c;
 				});
-
-				if (lake.expand && lake.expand.spatialPredictions.length > 0) {
-					const spatialPrediction = lake.expand.spatialPredictions[default_index]; // only use one for a specific date to not have to loop
-					const image_url = `${PUBLIC_POCKETBASE_URL}/api/files/${spatialPrediction.collectionId}/${spatialPrediction.id}/${spatialPrediction.display_image}`;
-					add_lake_overlay_to_map(
-						image_url,
-						leaflet.latLngBounds([
-							[spatialPrediction.corner1latitude, spatialPrediction.corner1longitude],
-							[spatialPrediction.corner2latitude, spatialPrediction.corner2longitude]
-						]),
-						lake.name
-					);
-				}
 			}
 
 			mapCoords.subscribe((updatedCoords) => {
 				map.setView(updatedCoords || defaultViewCoords, 12);
+			});
+
+			selectedDateIndex.subscribe((changedDateIndex) => {
+				clearImageOverlays();
+				for (const lake of lakes) {
+					if (!lake.expand || lake.expand.spatialPredictions.length == 0) {
+						continue;
+					}
+					for (let spatialPrediction of lake.expand.spatialPredictions) {
+						let spatialPredictionYYYYMMDD = new Date(spatialPrediction.date).toLocaleDateString(
+							'en-CA'
+						);
+						if (spatialPredictionYYYYMMDD == simpleRasterDates[changedDateIndex]) {
+							// if date passes the filter
+							const image_url = `${PUBLIC_POCKETBASE_URL}/api/files/${spatialPrediction.collectionId}/${spatialPrediction.id}/${spatialPrediction.display_image}`;
+							add_lake_overlay_to_map(
+								image_url,
+								leaflet.latLngBounds([
+									[spatialPrediction.corner1latitude, spatialPrediction.corner1longitude],
+									[spatialPrediction.corner2latitude, spatialPrediction.corner2longitude]
+								]),
+								lake.name
+							);
+						}
+					}
+				}
 			});
 		}
 	});

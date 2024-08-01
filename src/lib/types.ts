@@ -14,7 +14,6 @@ export type Lake = {
     expand?: {
         spatialPredictions: SpatialPredictionExported[]
     },
-    // date: z.string() // pocketbase returns dates as strings
 };
 
 export type LakeExported = Lake & StrictRecordModel;
@@ -22,7 +21,7 @@ export type LakeExported = Lake & StrictRecordModel;
 type SpatialPrediction = {
     raster_image: string;
     display_image: string;
-    date: string;
+    date: string; // pocketbase returns dates as strings
     scale: number;
     corner1latitude: number;
     corner1longitude: number;
