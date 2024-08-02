@@ -126,9 +126,7 @@
 						continue;
 					}
 					for (let spatialPrediction of lake.expand.spatialPredictions) {
-						let spatialPredictionYYYYMMDD = new Date(spatialPrediction.date).toLocaleDateString(
-							'en-CA'
-						);
+						let spatialPredictionYYYYMMDD = spatialPrediction.date.slice(0, 10);
 						if (spatialPredictionYYYYMMDD == simpleRasterDates[changedDateIndex]) {
 							// if date passes the filter
 							const image_url = `${PUBLIC_POCKETBASE_URL}/api/files/${spatialPrediction.collectionId}/${spatialPrediction.id}/${spatialPrediction.display_image}`;

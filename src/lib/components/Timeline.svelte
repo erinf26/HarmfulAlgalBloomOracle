@@ -14,8 +14,6 @@
 			$selectedDateIndex = $selectedDateIndex - 1;
 		}
 	}
-
-	// Date.toLocaleDateString('en-CA') returns in YYYY-MM-DD
 </script>
 
 <div class="timeline_container">

@@ -7,7 +7,7 @@ export const load: LayoutServerLoad = async ({ params }) => {
     let simpleRasterDates: string[] = []
     for (const lake of lakes) {
         if (lake.expand?.spatialPredictions && lake.expand.spatialPredictions.length > 0) {
-            simpleRasterDates = simpleRasterDates.concat(lake.expand.spatialPredictions.map(v => new Date(v.date).toLocaleDateString("en-CA")))
+            simpleRasterDates = simpleRasterDates.concat(lake.expand.spatialPredictions.map(v => v.date.slice(0, 10)))
         }
     }
 
