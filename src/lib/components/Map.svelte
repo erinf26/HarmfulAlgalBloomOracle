@@ -152,7 +152,7 @@
 
 <style>
 	.map {
-		height: 80vh;
+		height: 73vh;
 		margin-bottom: 1rem;
 	}
 </style>
