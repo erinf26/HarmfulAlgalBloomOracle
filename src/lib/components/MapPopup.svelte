@@ -1,17 +1,28 @@
 <script lang="ts">
-	export let lakeid: number;
-	export let lakename: string;
-	export let insitudate: string;
+	import type { LakeExported, TimeSeriesExported } from '$lib/types';
+	import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
+
+	export let lake: LakeExported;
+	export let current_raster_url: string | null;
 
 	// Date.toLocaleDateString('en-CA') outputs date in YYYY-MM-DD without swithcing timezone, exactly what is needed here
 </script>
 
-<div class="lakepopup" id={'lake' + String(lakeid)}>
-	<p class="lakename">{lakename}</p>
-	<p>In situ data recorded on {new Date(insitudate).toLocaleDateString('en-CA')}</p>
-	<button>Download Time Series</button>
-	<button>Download Prediction GeoTiff</button>
-	<button>Change Date</button>
+<div class="lakepopup" id={'lake' + String(lake.id)}>
+	<p class="lakename">{lake.name}</p>
+	<p>In situ data recorded on {new Date('error').toLocaleDateString('en-CA')}</p>
+	{#if lake?.expand?.timeSeriesItem}
+		<a
+			class="download_timeseries"
+			href={`${PUBLIC_POCKETBASE_URL}/api/files/${lake.expand.timeSeriesItem.collectionId}/${lake.expand.timeSeriesItem.id}/${lake.expand.timeSeriesItem.graph}`}
+			download>Download Time Series</a
+		>
+	{/if}
+	{#if current_raster_url}
+		<a class="download_prediction" href={current_raster_url} download>
+			Download Prediction GeoTiff
+		</a>
+	{/if}
 </div>
 
 <style scoped>
@@ -26,12 +37,14 @@
 		text-wrap: nowrap;
 	}
 
-	button {
+	button,
+	a {
 		border: 1px solid black;
 		border-radius: 5px;
 		background-color: white;
 		padding: 0.5rem;
 		display: block;
 		margin-block: 0.5rem;
+		width: fit-content;
 	}
 </style>

@@ -12,7 +12,8 @@ export type Lake = {
     longitude: number,
     lagoslakeid: number,
     expand?: {
-        spatialPredictions: SpatialPredictionExported[]
+        spatialPredictions: SpatialPredictionExported[],
+        timeSeriesItem: TimeSeriesExported
     },
 };
 
@@ -30,3 +31,9 @@ type SpatialPrediction = {
 }
 
 export type SpatialPredictionExported = SpatialPrediction & StrictRecordModel;
+
+type TimeSeriesEntry = {
+    graph: string;
+}
+
+export type TimeSeriesExported = TimeSeriesEntry & StrictRecordModel;

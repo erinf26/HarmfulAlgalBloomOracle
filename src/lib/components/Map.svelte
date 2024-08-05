@@ -20,6 +20,7 @@
 	let current_focused_lake_id: number | null = null; // unknown
 	let current_date: Date | null = null; // unknown
 	let visible_image_overlays: ImageOverlay[] = [];
+	let lakesToRasterByCurrentDate: Record<number, string> = {};
 
 	onMount(async () => {
 		if (browser) {
@@ -106,9 +107,8 @@
 					let c = new MapPopup({
 						target: container,
 						props: {
-							lakename: lake.name,
-							lakeid: lake.lagoslakeid,
-							insitudate: 'no date'
+							lake: lake,
+							current_raster_url: lakesToRasterByCurrentDate[lake.lagoslakeid]
 						} // i don't know if these props will update dynamically, warning for the future
 					});
 					return c;
@@ -122,7 +122,11 @@
 			selectedDateIndex.subscribe((changedDateIndex) => {
 				clearImageOverlays();
 				for (const lake of lakes) {
-					if (!lake.expand || lake.expand.spatialPredictions.length == 0) {
+					if (
+						!lake.expand ||
+						!lake.expand.spatialPredictions ||
+						lake.expand.spatialPredictions.length == 0
+					) {
 						continue;
 					}
 					for (let spatialPrediction of lake.expand.spatialPredictions) {
@@ -130,6 +134,8 @@
 						if (spatialPredictionYYYYMMDD == simpleRasterDates[changedDateIndex]) {
 							// if date passes the filter
 							const image_url = `${PUBLIC_POCKETBASE_URL}/api/files/${spatialPrediction.collectionId}/${spatialPrediction.id}/${spatialPrediction.display_image}`;
+							const raster_url = `${PUBLIC_POCKETBASE_URL}/api/files/${spatialPrediction.collectionId}/${spatialPrediction.id}/${spatialPrediction.raster_image}`;
+							lakesToRasterByCurrentDate[lake.lagoslakeid] = raster_url;
 							add_lake_overlay_to_map(
 								image_url,
 								leaflet.latLngBounds([
