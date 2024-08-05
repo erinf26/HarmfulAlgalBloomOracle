@@ -37,7 +37,6 @@
 		text-wrap: nowrap;
 	}
 
-	button,
 	a {
 		border: 1px solid black;
 		border-radius: 5px;
@@ -46,5 +45,6 @@
 		display: block;
 		margin-block: 0.5rem;
 		width: fit-content;
+		color: black;
 	}
 </style>
