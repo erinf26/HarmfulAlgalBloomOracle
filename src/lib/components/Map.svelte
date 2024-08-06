@@ -148,6 +148,23 @@
 					}
 				}
 			});
+
+			// load nys outline (data from https://gis.ny.gov/civil-boundaries)
+			// this is done client side to reduce onload package
+			// geojson export from NYS shapefiles with https://mapshaper.org/ (-proj wgs84)
+
+			const NYS_geojson_request = await fetch('/NYS_outline.json');
+			const NYS_geojson = await NYS_geojson_request.json();
+
+			leaflet
+				.geoJSON(NYS_geojson, {
+					style: {
+						color: 'black',
+						weight: 3,
+						fill: false
+					}
+				})
+				.addTo(map);
 		}
 	});
 </script>
