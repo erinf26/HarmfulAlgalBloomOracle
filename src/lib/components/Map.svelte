@@ -7,18 +7,15 @@
 	import { mapCoords, selectedDateIndex } from '$lib/store';
 	import MapPopup from './MapPopup.svelte';
 	import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
+	import { simpleRasterDates_filtered } from '$lib/store';
 
 	export let lakes: LakeExported[];
-	export let simpleRasterDates: string[];
 
 	let mapElement: HTMLElement;
 	let map: Map;
 
 	const defaultViewCoords: LatLngTuple = [42.18778778, -79.42924043]; // LAKE CHAUTAUQUA coords
 
-	let default_index = 0;
-	let current_focused_lake_id: number | null = null; // unknown
-	let current_date: Date | null = null; // unknown
 	let visible_image_overlays: ImageOverlay[] = [];
 	let lakesToRasterByCurrentDate: Record<number, string> = {};
 
@@ -120,6 +117,9 @@
 			});
 
 			selectedDateIndex.subscribe((changedDateIndex) => {
+				if (changedDateIndex == -1) {
+					return;
+				}
 				clearImageOverlays();
 				for (const lake of lakes) {
 					if (
@@ -131,7 +131,7 @@
 					}
 					for (let spatialPrediction of lake.expand.spatialPredictions) {
 						let spatialPredictionYYYYMMDD = spatialPrediction.date.slice(0, 10);
-						if (spatialPredictionYYYYMMDD == simpleRasterDates[changedDateIndex]) {
+						if (spatialPredictionYYYYMMDD == $simpleRasterDates_filtered[changedDateIndex]) {
 							// if date passes the filter
 							const image_url = `${PUBLIC_POCKETBASE_URL}/api/files/${spatialPrediction.collectionId}/${spatialPrediction.id}/${spatialPrediction.display_image}`;
 							const raster_url = `${PUBLIC_POCKETBASE_URL}/api/files/${spatialPrediction.collectionId}/${spatialPrediction.id}/${spatialPrediction.raster_image}`;

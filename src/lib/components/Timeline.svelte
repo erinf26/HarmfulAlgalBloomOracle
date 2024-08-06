@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { selectedDateIndex } from '$lib/store';
-
-	export let simpleRasterDates: string[];
+	import { simpleRasterDates_filtered } from '$lib/store';
 
 	function nextDate() {
-		if ($selectedDateIndex < simpleRasterDates.length - 1) {
+		if ($selectedDateIndex < $simpleRasterDates_filtered.length - 1) {
 			$selectedDateIndex = $selectedDateIndex + 1;
 		}
 	}
@@ -21,12 +20,12 @@
 		<span>&lt;</span>
 	</button>
 	<div class="center">
-		<p>{simpleRasterDates[$selectedDateIndex]}</p>
+		<p>{$simpleRasterDates_filtered[$selectedDateIndex]}</p>
 	</div>
 	<button
 		class="right"
 		on:click={nextDate}
-		disabled={$selectedDateIndex == simpleRasterDates.length - 1}
+		disabled={$selectedDateIndex == $simpleRasterDates_filtered.length - 1}
 	>
 		<span>&gt;</span>
 	</button>

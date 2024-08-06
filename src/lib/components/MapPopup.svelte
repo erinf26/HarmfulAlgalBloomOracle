@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { LakeExported, TimeSeriesExported } from '$lib/types';
 	import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
+	import { simpleRasterDates_filtered, selectedDateIndex } from '$lib/store';
 
 	export let lake: LakeExported;
 	export let current_raster_url: string | null;
@@ -10,6 +11,17 @@
 		`${PUBLIC_POCKETBASE_URL}/api/files/${lake.expand.timeSeriesItem.collectionId}/${lake.expand.timeSeriesItem.id}/${lake.expand.timeSeriesItem.graph}`;
 
 	// Date.toLocaleDateString('en-CA') outputs date in YYYY-MM-DD without swithcing timezone, exactly what is needed here
+	async function setTimeline() {
+		// clear all overlays
+		let newFilteredDates: string[] = [];
+
+		newFilteredDates = lake.expand?.spatialPredictions.map((v) => v.date.slice(0, 10)) || [];
+		newFilteredDates = [...new Set(newFilteredDates)]; // makes unique
+		newFilteredDates.sort(); // mutates
+		$simpleRasterDates_filtered = newFilteredDates;
+		$selectedDateIndex = -1; // do this to register a change
+		$selectedDateIndex = 0;
+	}
 </script>
 
 <div class="lakepopup" id={'lake' + String(lake.id)}>
@@ -25,6 +37,7 @@
 			Download Prediction GeoTiff
 		</a>
 	{/if}
+	<button on:click={setTimeline}>Restrict Timeline</button>
 </div>
 
 <style scoped>
@@ -39,7 +52,8 @@
 		text-wrap: nowrap;
 	}
 
-	a {
+	a,
+	button {
 		border: 1px solid black;
 		border-radius: 5px;
 		background-color: white;
