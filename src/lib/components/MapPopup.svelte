@@ -26,7 +26,7 @@
 
 <div class="lakepopup" id={'lake' + String(lake.id)}>
 	<p class="lakename">{lake.name}</p>
-	<p>In situ data recorded on {new Date('error').toLocaleDateString('en-CA')}</p>
+	<!-- <p>In situ data recorded on {new Date('error').toLocaleDateString('en-CA')}</p> -->
 	{#if lake?.expand?.timeSeriesItem}
 		<a class="download_timeseries" href={timeSeriesURL} download="">
 			<img src={timeSeriesURL} alt={`Time Series for ${lake.name}`} />
