@@ -5,6 +5,10 @@
 	export let lake: LakeExported;
 	export let current_raster_url: string | null;
 
+	let timeSeriesURL =
+		lake?.expand?.timeSeriesItem &&
+		`${PUBLIC_POCKETBASE_URL}/api/files/${lake.expand.timeSeriesItem.collectionId}/${lake.expand.timeSeriesItem.id}/${lake.expand.timeSeriesItem.graph}`;
+
 	// Date.toLocaleDateString('en-CA') outputs date in YYYY-MM-DD without swithcing timezone, exactly what is needed here
 </script>
 
@@ -12,11 +16,9 @@
 	<p class="lakename">{lake.name}</p>
 	<p>In situ data recorded on {new Date('error').toLocaleDateString('en-CA')}</p>
 	{#if lake?.expand?.timeSeriesItem}
-		<a
-			class="download_timeseries"
-			href={`${PUBLIC_POCKETBASE_URL}/api/files/${lake.expand.timeSeriesItem.collectionId}/${lake.expand.timeSeriesItem.id}/${lake.expand.timeSeriesItem.graph}`}
-			download>Download Time Series</a
-		>
+		<a class="download_timeseries" href={timeSeriesURL} download="">
+			<img src={timeSeriesURL} alt={`Time Series for ${lake.name}`} />
+		</a>
 	{/if}
 	{#if current_raster_url}
 		<a class="download_prediction" href={current_raster_url} download>
@@ -46,5 +48,8 @@
 		margin-block: 0.5rem;
 		width: fit-content;
 		color: black;
+	}
+	img {
+		width: 100%;
 	}
 </style>
