@@ -10,7 +10,10 @@
 	$simpleRasterDates_filtered = data.simpleRasterDates;
 </script>
 
-<h1>Algal Blooms Map</h1>
+<hgroup>
+	<h1>Algal Blooms Map</h1>
+	<p>Higher chlorophyll-a concentrations are represented by brighter colors.</p>
+</hgroup>
 
 <Searchbar lakes={data.lakes} />
 

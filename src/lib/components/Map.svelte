@@ -14,7 +14,7 @@
 	let mapElement: HTMLElement;
 	let map: Map;
 
-	const defaultViewCoords: LatLngTuple = [42.18778778, -79.42924043]; // LAKE CHAUTAUQUA coords
+	const defaultViewCoords: LatLngTuple = [42.18778778, -79.38924043]; // LAKE CHAUTAUQUA coords
 
 	let visible_image_overlays: ImageOverlay[] = [];
 	let lakesToRasterByCurrentDate: Record<number, string> = {};
@@ -113,7 +113,7 @@
 			}
 
 			mapCoords.subscribe((updatedCoords) => {
-				map.setView(updatedCoords || defaultViewCoords, 12);
+				map.setView(updatedCoords || defaultViewCoords, 11);
 			});
 
 			selectedDateIndex.subscribe((changedDateIndex) => {

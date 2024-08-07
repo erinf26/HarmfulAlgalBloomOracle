@@ -62,6 +62,7 @@
 		margin-block: 0.5rem;
 		width: fit-content;
 		color: black;
+		cursor: pointer;
 	}
 	img {
 		width: 100%;
