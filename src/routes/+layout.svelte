@@ -4,7 +4,8 @@
 </script>
 
 <svelte:head>
-	<title>CCRI Visualizer</title>
+	<title>Algal Blooms - CCRI Visualizer</title>
+	<meta name="description" content="View algal bloom predictions across New York State's lakes." />
 </svelte:head>
 
 <div id="navbar_container">
