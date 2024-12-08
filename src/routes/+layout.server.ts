@@ -1,14 +1,12 @@
-import { getLakes } from "$lib/db_utils.server";
+import { getLakes, getSpatialPredictionMaps } from "$lib/db_utils.server";
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ params }) => {
-    const lakes = await getLakes();
+    const [lakes, spatialPredictions] = await Promise.all([getLakes(), getSpatialPredictionMaps()]);
 
     let simpleRasterDates: string[] = []
-    for (const lake of lakes) {
-        if (lake.expand?.spatialPredictions && lake.expand.spatialPredictions.length > 0) {
-            simpleRasterDates = simpleRasterDates.concat(lake.expand.spatialPredictions.map(v => v.date.slice(0, 10)))
-        }
+    for (const spatialPredictionMap of spatialPredictions) {
+        simpleRasterDates.push(spatialPredictionMap.date.slice(0, 10)); 
     }
 
     // make dates unique
@@ -16,6 +14,7 @@ export const load: LayoutServerLoad = async ({ params }) => {
     simpleRasterDates.sort();
     return {
         lakes,
+        spatialPredictions,
         simpleRasterDates
     }
 };

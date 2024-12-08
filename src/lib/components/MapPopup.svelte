@@ -1,9 +1,10 @@
 <script lang="ts">
-	import type { LakeExported, TimeSeriesExported } from '$lib/types';
+	import type { LakeExported, TimeSeriesExported, SpatialPredictionExported } from '$lib/types';
 	import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
 	import { simpleRasterDates_filtered, selectedDateIndex } from '$lib/store';
 
 	export let lake: LakeExported;
+	export let spatialPredictions: SpatialPredictionExported[];
 	export let current_raster_url: string | null;
 
 	let timeSeriesURL =
@@ -15,7 +16,8 @@
 		// clear all overlays
 		let newFilteredDates: string[] = [];
 
-		newFilteredDates = lake.expand?.spatialPredictions.map((v) => v.date.slice(0, 10)) || [];
+		newFilteredDates =
+			spatialPredictions.filter((v) => v.lake == lake.id).map((v) => v.date.slice(0, 10)) || [];
 		newFilteredDates = [...new Set(newFilteredDates)]; // makes unique
 		newFilteredDates.sort(); // mutates
 		$simpleRasterDates_filtered = newFilteredDates;

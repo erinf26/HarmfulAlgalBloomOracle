@@ -19,4 +19,4 @@
 
 <Timeline />
 
-<Map lakes={data.lakes} />
+<Map lakes={data.lakes} spatialPredictions={data.spatialPredictions}/>

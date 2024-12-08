@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import type { CircleMarker, ImageOverlay, LatLngBounds, LatLngTuple, Map, Marker } from 'leaflet';
 	import { browser } from '$app/environment';
-	import type { Lake, LakeExported } from '$lib/types';
+	import type { Lake, LakeExported, SpatialPredictionExported } from '$lib/types';
 	import 'leaflet/dist/leaflet.css';
 	import { mapCoords, selectedDateIndex } from '$lib/store';
 	import MapPopup from './MapPopup.svelte';
@@ -10,6 +10,7 @@
 	import { simpleRasterDates_filtered } from '$lib/store';
 
 	export let lakes: LakeExported[];
+	export let spatialPredictions: SpatialPredictionExported[];
 
 	let mapElement: HTMLElement;
 	let map: Map;
@@ -105,7 +106,8 @@
 						target: container,
 						props: {
 							lake: lake,
-							current_raster_url: lakesToRasterByCurrentDate[lake.lagoslakeid]
+							current_raster_url: lakesToRasterByCurrentDate[lake.lagoslakeid],
+							spatialPredictions: spatialPredictions
 						} // i don't know if these props will update dynamically, warning for the future
 					});
 					return c;
@@ -121,28 +123,23 @@
 					return;
 				}
 				clearImageOverlays();
-				for (const lake of lakes) {
-					if (
-						!lake.expand ||
-						!lake.expand.spatialPredictions ||
-						lake.expand.spatialPredictions.length == 0
-					) {
-						continue;
-					}
-					for (let spatialPrediction of lake.expand.spatialPredictions) {
-						let spatialPredictionYYYYMMDD = spatialPrediction.date.slice(0, 10);
-						if (spatialPredictionYYYYMMDD == $simpleRasterDates_filtered[changedDateIndex]) {
-							// if date passes the filter
-							const image_url = `${PUBLIC_POCKETBASE_URL}/api/files/${spatialPrediction.collectionId}/${spatialPrediction.id}/${spatialPrediction.display_image}`;
-							const raster_url = `${PUBLIC_POCKETBASE_URL}/api/files/${spatialPrediction.collectionId}/${spatialPrediction.id}/${spatialPrediction.raster_image}`;
-							lakesToRasterByCurrentDate[lake.lagoslakeid] = raster_url;
+				for (const spatialPrediction of spatialPredictions) {
+					let spatialPredictionYYYYMMDD = spatialPrediction.date.slice(0, 10);
+
+					if (spatialPredictionYYYYMMDD == $simpleRasterDates_filtered[changedDateIndex]) {
+						// if date passes the filter
+						const image_url = `${PUBLIC_POCKETBASE_URL}/api/files/${spatialPrediction.collectionId}/${spatialPrediction.id}/${spatialPrediction.display_image}`;
+						const raster_url = `${PUBLIC_POCKETBASE_URL}/api/files/${spatialPrediction.collectionId}/${spatialPrediction.id}/${spatialPrediction.raster_image}`;
+						lakesToRasterByCurrentDate[spatialPrediction.lagoslakeid] = raster_url;
+						const corresponding_lake = lakes.find((v) => v.id == spatialPrediction.lake); // hacky solution to find lakename
+						if (corresponding_lake) {
 							add_lake_overlay_to_map(
 								image_url,
 								leaflet.latLngBounds([
 									[spatialPrediction.corner1latitude, spatialPrediction.corner1longitude],
 									[spatialPrediction.corner2latitude, spatialPrediction.corner2longitude]
 								]),
-								lake.name
+								corresponding_lake.name
 							);
 						}
 					}
