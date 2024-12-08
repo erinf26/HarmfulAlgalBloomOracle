@@ -1,8 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import type { PageData } from './$types';
 	import Box from '$lib/components/Box.svelte';
-	export let data: PageData;
 </script>
 
 <div class="box-container">
